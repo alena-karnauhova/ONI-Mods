@@ -10,6 +10,9 @@ namespace BlockDecorBehindWalls
 {
     public class BlockDecorBehindWalls : KMod.UserMod2
     {
+        private static Tag fancyWallTag = new Tag("BlockDecorBehindWalls_FancyWall");
+        private static readonly Tag[] ignoreTags = new Tag[] { fancyWallTag };
+
         public static bool CheckBackwall(int cell)
         {
             GameObject go = Grid.Objects[cell, (int)ObjectLayer.Backwall];
@@ -24,10 +27,12 @@ namespace BlockDecorBehindWalls
             {
                 BuildingComplete building = __instance.GetComponent<BuildingComplete>();
                 BuildingDef def = building?.Def;
-                if (def && (def.SceneLayer < Grid.SceneLayer.LogicGatesFront)
+                if (def 
+                    && (def.SceneLayer < Grid.SceneLayer.LogicGatesFront)
                     && (Options.Instance.AffectHeavyWires
-                    || def.BuildLocationRule != BuildLocationRule.NotInTiles)
-                    && building.PlacementCells.All(CheckBackwall))
+                        || def.BuildLocationRule != BuildLocationRule.NotInTiles)
+                    && building.PlacementCells.All(CheckBackwall)
+                    && !building.HasAnyTags(ignoreTags))
                 {
                     __instance.currDecor = 0.0f;
                     return false;
