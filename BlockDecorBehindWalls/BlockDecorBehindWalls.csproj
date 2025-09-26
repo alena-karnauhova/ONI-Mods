@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <ModName>Block Decor Effects Behind Walls</ModName>
-        <MinimumSupportedBuild>509629</MinimumSupportedBuild>
+        <Description>Nullifies decor for buildings covered by backwalls.</Description>
         <UsePLib>true</UsePLib>
     </PropertyGroup>
 

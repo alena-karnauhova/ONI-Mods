@@ -26,8 +26,9 @@ namespace BlockDecorBehindWalls
             private static bool Prefix(DecorProvider __instance)
             {
                 BuildingComplete building = __instance.GetComponent<BuildingComplete>();
-                BuildingDef def = building?.Def;
-                if (def 
+                if (building == null) return true;
+                BuildingDef def = building.Def;
+                if (def
                     && (def.SceneLayer < Grid.SceneLayer.LogicGatesFront)
                     && (Options.Instance.AffectHeavyWires
                         || def.BuildLocationRule != BuildLocationRule.NotInTiles)
@@ -43,7 +44,8 @@ namespace BlockDecorBehindWalls
 
         public static void UpdateDecorBehindWall(BuildingComplete building)
         {
-            if (building.Def?.ObjectLayer == ObjectLayer.Backwall)
+            if (building == null || building.Def == null) return;
+            if (building.Def.ObjectLayer == ObjectLayer.Backwall)
             {
                 foreach (int cell in building.PlacementCells)
                 {
@@ -52,8 +54,8 @@ namespace BlockDecorBehindWalls
                         GameObject go = Grid.Objects[cell, layer];
                         if (go == null) continue;
                         DecorProvider decorProvider = go.GetComponent<DecorProvider>();
-                        BuildingDef def = go.GetComponent<BuildingComplete>()?.Def;
-                        if (decorProvider && def)
+                        BuildingComplete buildingComplete = go.GetComponent<BuildingComplete>();
+                        if (decorProvider && buildingComplete && buildingComplete.Def)
                         {
                             decorProvider.Refresh();
                         }
