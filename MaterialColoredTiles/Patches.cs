@@ -59,8 +59,8 @@ namespace MaterialColoredTilesAndMore
             private static void Postfix(ref Color __result, int cell, SimHashes element)
             {
                 GameObject tile = Grid.Objects[cell, (int)ObjectLayer.FoundationTile];
-                if (!Options.Instance.Tiles
-                    || tile?.TryGetComponent(out BuildingComplete _) != true)
+                if (!(Options.Instance.Tiles && tile
+                    && tile.TryGetComponent(out BuildingComplete _)))
                     return;
                 if (tile.TryGetComponent(out PrimaryElement elem))
                 {

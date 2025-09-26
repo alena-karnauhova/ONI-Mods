@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <ModName>Material Colored Tiles and more</ModName>
-        <MinimumSupportedBuild>496912</MinimumSupportedBuild>
+        <Description>Paints tiles, walls and some other buildings based on material they are built of.</Description>
         <UsePLib>true</UsePLib>
     </PropertyGroup>
 
