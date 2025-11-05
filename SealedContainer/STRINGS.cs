@@ -37,5 +37,14 @@ namespace SealedContainer
                 public static readonly LocString DESC = "Only Insulation can be used for Insulated Container construction if enabled.";
             }
         }
+
+        public static class MISC
+        {
+            public static class TAGS
+            {
+                public static readonly LocString SUPERINSULATOR
+                    = GameStrings.ELEMENTS.SUPERINSULATOR.NAME;
+            }
+        }
     }
 }

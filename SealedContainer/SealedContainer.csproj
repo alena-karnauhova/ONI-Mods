@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <ModName>Sealed and Insulated Containers</ModName>
-        <MinimumSupportedBuild>496912</MinimumSupportedBuild>
+        <Description>Storage buildings that seal and insulate their contents.</Description>
         <UsePLib>true</UsePLib>
     </PropertyGroup>
 

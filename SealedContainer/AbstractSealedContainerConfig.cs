@@ -20,7 +20,8 @@ namespace SealedContainer
             Storage storage = go.AddOrGet<Storage>();
             storage.capacityKg = Options.Instance.Capacity;
             storage.SetDefaultStoredItemModifiers(StorageItemModifiers);
-            go.AddOrGet<Automatable>();
+            Automatable automatable = go.AddOrGet<Automatable>();
+            //automatable.SetAutomationOnly(false); // doesn't work
         }
         /*public override void DoPostConfigureComplete(GameObject go)
         {
