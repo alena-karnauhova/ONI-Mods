@@ -7,22 +7,26 @@ namespace Creature_Motion_Sensor
     [SerializationConfig(MemberSerialization.OptIn)]
     public class LogicCreatureSensor : Switch, IIntSliderControl, ISim1000ms, ISim200ms
     {
+        #region Components
+        [MyCmpReq]
+        private readonly KSelectable selectable;
+        [MyCmpGet]
+        private readonly Rotatable rotatable;
+        [MyCmpReq]
+        private readonly RangeVisualizer rangeVisualizer;
+        [MyCmpReq]
+        private readonly LogicPorts logicPorts;
+        [MyCmpReq]
+        private readonly KBatchedAnimController animController;
+        #endregion
         [Serialize]
         protected int pickupRange = 5;
         private readonly List<Pickupable> creatures = new List<Pickupable>();
         private readonly List<int> reachableCells = new List<int>(100);
-        [MyCmpReq]
-        private KSelectable selectable;
-        [MyCmpGet]
-        private Rotatable rotatable;
         private bool wasOn;
         private HandleVector<int>.Handle pickupablesChangedEntry;
         private bool pickupablesDirty;
         private Extents pickupableExtents;
-        [MyCmpReq]
-        private readonly RangeVisualizer rangeVisualizer;
-        [MyCmpReq]
-        private LogicPorts logicPorts;
 
         #region ISliderControl
         public string SliderTitleKey => "STRINGS.UI.STARMAP.ROCKETSTATS.TOTAL_RANGE";
@@ -41,7 +45,7 @@ namespace Creature_Motion_Sensor
             RefreshVisualCells();
         }
         public string GetSliderTooltipKey(int index) => string.Format(STRINGS.UI.UISIDESCREENS.LOGICCREATURESENSORSIDESCREEN.TOOLTIP, pickupRange);
-        public string GetSliderTooltip() => string.Format(STRINGS.UI.UISIDESCREENS.LOGICCREATURESENSORSIDESCREEN.TOOLTIP, pickupRange);
+        public string GetSliderTooltip(int index) => string.Format(STRINGS.UI.UISIDESCREENS.LOGICCREATURESENSORSIDESCREEN.TOOLTIP, pickupRange);
         #endregion
 
         protected override void OnPrefabInit()
@@ -64,7 +68,6 @@ namespace Creature_Motion_Sensor
         protected override void OnCleanUp()
         {
             GameScenePartitioner.Instance.Free(ref pickupablesChangedEntry);
-            MinionGroupProber.Get().ReleaseProber(this);
             base.OnCleanUp();
         }
 
@@ -134,7 +137,7 @@ namespace Creature_Motion_Sensor
         {
             if (!pickupablesDirty) return;
             creatures.Clear();
-            ListPool<ScenePartitionerEntry, LogicCreatureSensor>.PooledList pooledList = ListPool<ScenePartitionerEntry, LogicCreatureSensor>.Allocate();
+            var pooledList = ListPool<ScenePartitionerEntry, LogicCreatureSensor>.Allocate();
             GameScenePartitioner.Instance.GatherEntries(pickupableExtents, GameScenePartitioner.Instance.pickupablesLayer, pooledList);
             int cell = Grid.PosToCell(this);
             for (int index = 0; index < pooledList.Count; ++index)
@@ -179,12 +182,15 @@ namespace Creature_Motion_Sensor
             if (!(wasOn != switchedOn || force))
                 return;
             wasOn = switchedOn;
-            KBatchedAnimController component = GetComponent<KBatchedAnimController>();
-            component.Play(switchedOn ? "on_pre" : "on_pst");
-            component.Queue(switchedOn ? "on" : "off");
+            animController.Play(switchedOn ? "on_pre" : "on_pst");
+            animController.Queue(switchedOn ? "on" : "off");
         }
 
-        protected override void UpdateSwitchStatus() => selectable.SetStatusItem(Db.Get().StatusItemCategories.Power,
-            switchedOn ? Db.Get().BuildingStatusItems.LogicSensorStatusActive : Db.Get().BuildingStatusItems.LogicSensorStatusInactive);
+        protected override void UpdateSwitchStatus()
+        {
+            Db db = Db.Get();
+            selectable.SetStatusItem(db.StatusItemCategories.Power, switchedOn ?
+                db.BuildingStatusItems.LogicSensorStatusActive : db.BuildingStatusItems.LogicSensorStatusInactive);
+        }
     }
 }

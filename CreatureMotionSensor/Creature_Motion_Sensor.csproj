@@ -2,8 +2,7 @@
 
     <PropertyGroup>
         <ModName>Creature Motion Sensor</ModName>
-        <!--UsePLib>true</UsePLib-->
-        <MinimumSupportedBuild>561558</MinimumSupportedBuild>
+        <Description>An automation building that detects critters in configurable range.</Description>
     </PropertyGroup>
 
     <Import Project="..\Utils\Utils.projitems" Label="Shared" />

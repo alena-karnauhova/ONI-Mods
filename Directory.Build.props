@@ -17,7 +17,7 @@
         <Product>ONI_Mods</Product>
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
-        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
         <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisLevel>latest-all</AnalysisLevel>
@@ -29,7 +29,7 @@
     </ItemDefinitionGroup>
 
     <ItemGroup>
-        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34" />
+        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.44" />
         <Reference Include="0Harmony" />
         <Reference Include="Assembly-CSharp" />
         <Reference Include="Assembly-CSharp-firstpass" />
@@ -37,7 +37,7 @@
         <Reference Include="UnityEngine.CoreModule" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePLib)' == 'true'">
-        <PackageReference Include="PLib" Version="4.17.1" />
+        <PackageReference Include="PLib" Version="4.19" />
         <Reference Include="Newtonsoft.Json" />
         <Reference Include="Unity.TextMeshPro" />
         <Reference Include="UnityEngine.TextRenderingModule" />
