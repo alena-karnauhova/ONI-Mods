@@ -7,8 +7,6 @@ using PeterHan.PLib.Buildings;
 using System.Reflection;
 using Database;
 using Utils;
-using PeterHan.PLib.UI;
-using MonoMod.Utils;
 
 namespace ShinebugReactor
 {
@@ -19,7 +17,9 @@ namespace ShinebugReactor
         {
             private static bool Prefix(IncubationMonitor.Instance __instance, bool stored)
             {
-                if (stored && __instance.GetStorage()?.GetComponent<ShinebugReactor>())
+                if (!stored) return true;
+                var storage = __instance.GetStorage();
+                if (storage && storage.GetComponent<ShinebugReactor>())
                 {
                     __instance.sm.isSuppressed.Set(false, __instance);
                     return false;
@@ -33,7 +33,8 @@ namespace ShinebugReactor
         {
             private static bool Prefix(IncubationMonitor.Instance smi)
             {
-                if (smi.GetStorage()?.GetComponent<ShinebugReactor>())
+                var storage = smi.GetStorage();
+                if (storage && storage.GetComponent<ShinebugReactor>())
                 {
                     return false;
                 }
@@ -45,11 +46,13 @@ namespace ShinebugReactor
         private static class IncubationMonitor_SpawnBaby_Patch
         {
             private static readonly Func<IncubationMonitor.Instance, GameObject> spawnShell
-                = AccessTools.Method(typeof(IncubationMonitor), "SpawnShell")
-                .CreateDelegate<Func<IncubationMonitor.Instance, GameObject>>();
+                = AccessTools.MethodDelegate<Func<IncubationMonitor.Instance, GameObject>>(
+                    AccessTools.Method(typeof(IncubationMonitor), "SpawnShell"));
             private static bool Prefix(IncubationMonitor.Instance smi)
             {
-                ShinebugReactor reactor = smi.GetStorage()?.GetComponent<ShinebugReactor>();
+                var storage = smi.GetStorage();
+                if (!storage) return true;
+                ShinebugReactor reactor = smi.GetStorage().GetComponent<ShinebugReactor>();
                 if (reactor)
                 {
                     spawnShell(smi);

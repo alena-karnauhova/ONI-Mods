@@ -8,7 +8,6 @@ using GameStrings = STRINGS;
 using HarmonyLib;
 using System.Reflection;
 using Database;
-using MonoMod.Utils;
 using static GameComps;
 
 namespace ShinebugReactor
@@ -169,6 +168,7 @@ namespace ShinebugReactor
         public float MaxCapacity => 100f;
         public bool WholeValues => true;
         public LocString CapacityUnits => UNITSUFFIXES.CRITTERS;
+        public bool ControlEnabled() => true;
         #endregion
         #region ISliderControl
         public string SliderTitleKey => "STRINGS.UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.TITLE";
@@ -201,7 +201,7 @@ namespace ShinebugReactor
         {
             FilteredStorage fs = new FilteredStorage(this, null, this, false, Db.Get().ChoreTypes.PowerFetch);
             fs.SetRequiredTag(requiredTag);
-            var onStorageChanged = method.CreateDelegate<Action<object>>(fs);
+            var onStorageChanged = AccessTools.MethodDelegate<Action<object>>(method, fs);
             Unsubscribe((int)GameHashes.OnStorageChange, onStorageChanged);
             var traverse = Traverse.Create(fs).Field<FetchList2>("fetchList");
             return (fs, traverse);

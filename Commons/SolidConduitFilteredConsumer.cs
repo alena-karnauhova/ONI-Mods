@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using MonoMod.Utils;
 using System;
 using UnityEngine;
 using static HarmonyLib.AccessTools;
@@ -26,16 +25,16 @@ namespace Commons
             capacityControl = GetComponent<IUserControlledCapacity>();
             utilityCellField = Traverse.Create(this).Field<int>("utilityCell");
             consumingField = Traverse.Create(this).Field<bool>("consuming");
-            getConduitFlow = Method(typeof(SolidConduitConsumer), "GetConduitFlow")
-                .CreateDelegate<Func<SolidConduitFlow>>(this);
-            getConnectedNetworkID = Method(typeof(SolidConduitConsumer), "GetConnectedNetworkID")
-                .CreateDelegate<Func<int>>(this);
+            getConduitFlow = MethodDelegate<Func<SolidConduitFlow>>(
+                Method(typeof(SolidConduitConsumer), "GetConduitFlow"), this);
+            getConnectedNetworkID = MethodDelegate<Func<int>>(
+                Method(typeof(SolidConduitConsumer), "GetConnectedNetworkID"), this);
         }
         protected override void OnSpawn()
         {
             base.OnSpawn();
-            Action<float> baseConduitUpdate = Method(typeof(SolidConduitConsumer), "ConduitUpdate")
-                .CreateDelegate<Action<float>>(this);
+            Action<float> baseConduitUpdate = MethodDelegate<Action<float>>(
+                Method(typeof(SolidConduitConsumer), "ConduitUpdate"), this);
             getConduitFlow().RemoveConduitUpdater(baseConduitUpdate);
             getConduitFlow().AddConduitUpdater(ConduitUpdate, ConduitFlowPriority.Default);
         }

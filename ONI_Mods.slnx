@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/MSBuild/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.props.default" />
+    <File Path="Directory.Build.targets" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="BlockDecorBehindWalls/BlockDecorBehindWalls.csproj" />
+  <Project Path="Commons/Commons.shproj" />
+  <Project Path="CreatureMotionSensor/Creature_Motion_Sensor.csproj" />
+  <Project Path="MaterialColoredTiles/MaterialColoredTilesAndMore.csproj" />
+  <Project Path="MeteorSeasons/MeteorSeasons.csproj" />
+  <Project Path="NoSublimationWhenItemsAreInStorage/NoSublimationWhenItemsAreInStorage.csproj" />
+  <Project Path="RadiateHeatInSpace/RadiateHeatInSpace.csproj" />
+  <Project Path="SealedContainer/SealedContainer.csproj" />
+  <Project Path="ShinebugReactor/ShinebugReactor.csproj" />
+  <Project Path="SizeNotIncluded/SizeNotIncluded.csproj" />
+  <Project Path="SynchronizedTelepad/SynchronizedTelepad.csproj" />
+  <Project Path="Utils/Utils.shproj" />
+</Solution>

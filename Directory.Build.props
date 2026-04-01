@@ -7,20 +7,26 @@
     <PropertyGroup>
         <RequiredDLCs></RequiredDLCs>
         <ForbiddenDLCs></ForbiddenDLCs>
-        <MinimumSupportedBuild>659901</MinimumSupportedBuild>
+        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
         <APIVersion>2</APIVersion>
     </PropertyGroup>
 
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
-        <Authors>shelena_malk</Authors>
-        <Product>ONI_Mods</Product>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
         <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
         <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <Deterministic>true</Deterministic>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisLevel>latest-all</AnalysisLevel>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>shelena_malk</Authors>
+        <Product>ONI_Mods</Product>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
@@ -29,7 +35,7 @@
     </ItemDefinitionGroup>
 
     <ItemGroup>
-        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.44" />
+        <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="*" Private="false" />
         <Reference Include="0Harmony" />
         <Reference Include="Assembly-CSharp" />
         <Reference Include="Assembly-CSharp-firstpass" />
@@ -37,7 +43,7 @@
         <Reference Include="UnityEngine.CoreModule" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePLib)' == 'true'">
-        <PackageReference Include="PLib" Version="4.19" />
+        <PackageReference Include="PLib" Version="*" Private="true" />
         <Reference Include="Newtonsoft.Json" />
         <Reference Include="Unity.TextMeshPro" />
         <Reference Include="UnityEngine.TextRenderingModule" />
