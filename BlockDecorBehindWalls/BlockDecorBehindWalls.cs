@@ -30,6 +30,7 @@ namespace BlockDecorBehindWalls
                 BuildingDef def = building.Def;
                 if (def
                     && (def.SceneLayer < Grid.SceneLayer.LogicGatesFront)
+                    && (def.ObjectLayer != ObjectLayer.Backwall)
                     && (Options.Instance.AffectHeavyWires
                         || def.BuildLocationRule != BuildLocationRule.NotInTiles)
                     && building.PlacementCells.All(CheckBackwall)
