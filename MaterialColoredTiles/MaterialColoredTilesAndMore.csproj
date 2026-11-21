@@ -4,6 +4,7 @@
         <ModName>Material Colored Tiles and more</ModName>
         <Description>Paints tiles, walls and some other buildings based on material they are built of.</Description>
         <UsePLib>true</UsePLib>
+        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
     </PropertyGroup>
 
     <Import Project="..\Utils\Utils.projitems" Label="Shared" />

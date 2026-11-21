@@ -17,7 +17,7 @@ namespace ShinebugReactor
         //public const string category = "Power";
         //public const string tech = "RenewableEnergy";
         public const int width = 9;//10
-        public const int height = 5;
+        public const int height = 4;//5;
         public const string FIRE_PORT_ID = "ShinebugReactorFirePort";
         public const string FULL_PORT_ID = "ShinebugReactorFullPort";
         public const float RADIUS_FACTOR = 26.5f;

@@ -7,7 +7,7 @@
     <PropertyGroup>
         <RequiredDLCs></RequiredDLCs>
         <ForbiddenDLCs></ForbiddenDLCs>
-        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
+        <MinimumSupportedBuild>763796</MinimumSupportedBuild>
         <APIVersion>2</APIVersion>
     </PropertyGroup>
 

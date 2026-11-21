@@ -2,7 +2,8 @@
 
     <PropertyGroup>
         <ModName>Stop Sublimation While In Storage</ModName>
-        <MinimumSupportedBuild>622222</MinimumSupportedBuild>
+        <Description>Prevents sublimation of substances that are in storage.</Description>
+        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
     </PropertyGroup>
 
 </Project>

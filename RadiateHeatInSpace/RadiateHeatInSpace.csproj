@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <ModName>Radiate Heat in Space</ModName>
+        <Description>Adds heat radiation from buildings into space and heating from sun.</Description>
         <UsePLib>true</UsePLib>
     </PropertyGroup>
 

@@ -2,7 +2,8 @@
 
     <PropertyGroup>
         <ModName>Synchronized Telepad</ModName>
-        <MinimumSupportedBuild>469369</MinimumSupportedBuild>
+        <Description>Makes Printing Pod to always activate at the same time of day.</Description>
+        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
     </PropertyGroup>
 
 </Project>

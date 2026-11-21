@@ -2,8 +2,10 @@
 
     <PropertyGroup>
         <ModName>Meteor Seasons Notifier</ModName>
+        <Description>Shows notifications about current meteor seasons and showers</Description>
         <UsePLib>true</UsePLib>
         <RootNamespace>Meteor_Seasons</RootNamespace>
+        <MinimumSupportedBuild>719533</MinimumSupportedBuild>
     </PropertyGroup>
 
     <Import Project="..\Utils\Utils.projitems" Label="Shared" />

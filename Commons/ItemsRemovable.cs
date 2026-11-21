@@ -1,4 +1,5 @@
 ﻿using KSerialization;
+using System;
 using UnityEngine;
 using static Commons.STRINGS.UI.UISIDESCREENS;
 
@@ -11,8 +12,8 @@ namespace Commons
         protected readonly Storage storage;
         [MyCmpAdd]
         private readonly CopyBuildingSettings copyBuildingSettings;
-        private static readonly EventSystem.IntraObjectHandler<ItemsRemovable> OnCopySettingsDelegate
-            = new EventSystem.IntraObjectHandler<ItemsRemovable>((component, data) => component.OnCopySettings(data));
+        private static readonly Action<object, object> OnCopySettingsDelegate
+            = ((component, data) => ((ItemsRemovable)component).OnCopySettings(data));
 
         [Serialize]
         private bool allowItemRemoval = true;
@@ -38,7 +39,7 @@ namespace Commons
         protected override void OnSpawn()
         {
             base.OnSpawn();
-            Subscribe((int)GameHashes.CopySettings, OnCopySettingsDelegate);
+            Subscribe((int)GameHashes.CopySettings, OnCopySettingsDelegate, this);
             UpdateStorageModifiers();
         }
 

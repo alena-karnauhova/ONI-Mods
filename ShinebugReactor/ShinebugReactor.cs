@@ -108,6 +108,8 @@ namespace ShinebugReactor
         //[Serialize]
         //public Ref<HighEnergyParticlePort> capturedByRef = new Ref<HighEnergyParticlePort>();
         #endregion
+        protected static readonly Action<object, object> OnStorageChangedDelegate = OnStorageChanged;
+        protected int onStorageChangedHandle = -1;
         protected HandleVector<int>.Handle accumulator;
         protected HandleVector<int>.Handle structureTemperature;
         [Serialize]
@@ -222,7 +224,7 @@ namespace ShinebugReactor
             directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(),
                 "redirector_target", "redirect", EightDirectionController.Offset.Infront);
             Direction = Direction;
-            Subscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+            onStorageChangedHandle = Subscribe((int)GameHashes.OnStorageChange, OnStorageChangedDelegate, this);
             Subscribe((int)GameHashes.DeconstructComplete, OnDeconstruct);
             treeFilterable.OnFilterChanged += OnFilterChanged;
             filteredStorageEggs.FilterChanged();
@@ -293,9 +295,9 @@ namespace ShinebugReactor
         public void EggHatched(GameObject egg, float age = 0f)
         {
             if (egg == null) return;
-            Unsubscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+            Unsubscribe(ref onStorageChangedHandle);
             storage.Drop(egg);
-            Subscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+            onStorageChangedHandle = Subscribe((int)GameHashes.OnStorageChange, OnStorageChangedDelegate, this);
             var shinebugName = egg.PrefabID().Name.Replace(EGG_POSTFIX, string.Empty).Replace(BABY_POSTFIX, string.Empty);
             Creatures.Add(new ShinebugSimulator(shinebugName, age));
             UpdateFetch();
@@ -360,9 +362,9 @@ namespace ShinebugReactor
             if (!dropped && (Mathf.RoundToInt(AmountStored) > UserCapacity
                 || !treeFilterable.ContainsTag(go.PrefabID())))
             {
-                Unsubscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+                Unsubscribe(ref onStorageChangedHandle);
                 storage.Drop(go);
-                Subscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+                onStorageChangedHandle = Subscribe((int)GameHashes.OnStorageChange, OnStorageChangedDelegate, this);
                 dropped = true;
             }
             //filterable.UpdateFilters(new List<Tag>(filterable.AcceptedTags));
@@ -380,9 +382,9 @@ namespace ShinebugReactor
             }
             UpdateFetch(dirty);
         }
-        protected void OnStorageChanged(object data)
+        protected static void OnStorageChanged(object context, object data)
         {
-            OnStorageChanged(data as GameObject, true);
+            ((ShinebugReactor)context).OnStorageChanged(data as GameObject, true);
         }
 
         protected void OnDeconstruct(object data)
@@ -515,7 +517,7 @@ namespace ShinebugReactor
             if (Options.Instance.ReproductionMode != Options.ReproductionModeType.Immortality)
             {
                 bool dirty = false;
-                Unsubscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+                Unsubscribe(ref onStorageChangedHandle);
                 for (int i = Creatures.Count - 1; i >= 0; --i)
                 {
                     ShinebugSimulator shinebug = Creatures[i];
@@ -534,7 +536,7 @@ namespace ShinebugReactor
                         }
                     }
                 }
-                Subscribe((int)GameHashes.OnStorageChange, OnStorageChanged);
+                onStorageChangedHandle = Subscribe((int)GameHashes.OnStorageChange, OnStorageChangedDelegate, this);
                 UpdateFetch(dirty);
             }
         }
